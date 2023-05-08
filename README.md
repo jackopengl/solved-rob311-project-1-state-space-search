@@ -1,0 +1,33 @@
+Download Link: https://assignmentchef.com/product/solved-rob311-project-1-state-space-search
+<br>
+<h1>Part 1: Uninformed Search</h1>
+
+You have been hired by PluggedUp, a tech startup that runs a social network focussed on “plugging” professionals into their dream careers. Your first task is to determine the shortest path connecting two users in the network so that recruiters can introduce employers to prospective hires through mutual acquaintances. The social network is stored as an undirected graph <em>G </em>where the vertices <em>v </em>∈ <em>V </em>representing users are labelled with unique integers and users that are in one another’s contact lists are connected with an edge <em>e </em>∈ <em>E</em>. Connections are assumed to be uniformly weighted so that the shortest path is simply the number of edges or hops between two vertices.
+
+The GridSearchProblem class has a constructor that takes in an initial state, a list of goal states (we will only ever have a single goal state in this assignment), and a graph specified by a set of vertices <em>V </em>and edges <em>E</em>. The example at the bottom of breadth_first_search.py and bidirectional_search.py gives an example problem setup using the provided file stanford_large_network_facebook_combined.txt. These edges are from real anonymized Facebook data made available by the <a href="https://snap.stanford.edu/data/index.html">Stanford Large Network Dataset </a><a href="https://snap.stanford.edu/data/index.html">Collection</a>. Your tasks are to:
+
+<ol>
+
+ <li>Implement breadth-first search (BFS) to find the shortest path between two users in the graph. Use the function template called breadth_first_search in py. Your function should return a tuple with list of states representing your path from the initial state to the goal state, the number of nodes expanded by your search, and the maximum frontier size encountered during the search. Only the first element of this tuple (the path) will be graded, but the other fields are useful for comparing algorithms and will be needed in Part 2. You are free to implement your own data structures in this file, but you would be wise to make use of the <a href="https://docs.python.org/3.3/library/collections.html#collections.deque">deque</a> structure provided in the import. The <a href="https://docs.python.org/3/tutorial/datastructures.html#sets">set() </a>data structure is also potentially useful.</li>
+
+ <li>Implement bidirectional search to solve the shortest path problem, using the function template bidirectional_search in py. The textbook (AIMA) describes bidirectional search on page 90, but it leaves out some details that you will have to fill in to ensure that your bidirectional search is optimal. To test and debug your code, compare your results with those from the implementation of breadth_first_search. You should think about the relative runtime, max. frontier size, and number of nodes expanded by each algorithm.</li>
+
+</ol>
+
+You will submit your implementations through Autolab (instructions at the end of this document).
+
+<h1>Part 2: Occupancy Grid Planning With A<em><sup>⋆</sup></em></h1>
+
+In this section, you will work with the GridSearchProblem class to find optimal paths through a 2D occupancy grid maze (see Figure 1 for an example). In the lecture slides and on page 84 of AIMA, the pseudocode describing uniform cost search provides a good guide, but there are other variants that you are free to explore. For example, you <strong>do not </strong>have to remove a node from the frontier if a node with a shorter path to the initial state is found. This results in a less memory efficient but sometimes faster algorithm. We recommend using the PriorityQueue class provided by the <a href="https://docs.python.org/3/library/queue.html">queue</a> library (note that you do not have access to deque for this problem).
+
+Our ultimate goal is to study the “hardness” of grid search problem instances in the same manner as the graphs on page 264 of AIMA. Your tasks are to:
+
+<ol>
+
+ <li>Fill in the a_star_search function in py so that it outputs a tuple consisting of a path (once again a list of integer states), the number of nodes generated, and the maximum frontier size encountered. You may once again find the set() data structure useful, as well as the standard dictionary (dict()).</li>
+
+ <li>For different values of a square map with dimension <em>N</em>, recreate the graphs on page 264 of AIMA for our grid search problem. Rather than the clause to symbol ratio, our “hardness” parameter on the <em>x</em>-axis will be the probability <em>p<sub>occ </sub></em>of a grid cell being occupied. This value is the first argument of py. On the <em>y</em>-axis of one chart, plot the portion of <em>n<sub>runs </sub></em>that were solvable by A<em><sup>⋆</sup></em>, and on the other plot the average number of nodes <em>generated </em>over <em>n<sub>runs</sub></em>. Generated nodes include those <strong>not </strong>added to the frontier (i.e. legal state transitions that are not added because they have already been explored). Plot one curve for square grid size <em>N </em>= 20, <em>N </em>= 100, and <em>N </em>= 500 (<em>M </em>= <em>N </em>in all cases). Use <em>n<sub>runs </sub></em>= 100 and use a resolution of 0.05 for values of <em>p<sub>occ </sub></em>from 0.1 to 0.9. For each of the <em>n<sub>runs </sub></em>problem instances at each value of <em>p<sub>occ </sub></em>and <em>N</em>, use get_random_grid_problem to generate your problem instance. This experiment may take a while to run! Does A<em><sup>⋆ </sup></em>exhibit the same “phase transition” phenomenon as SAT? What effect does increasing <em>N </em>appear to have on each plot? Would you conjecture that this threshold becomes sharp as <em>N </em>→∞?</li>
+
+ <li>Complete the simple template function search_phase_transition in py. This function simply returns the hardness “transition interval” [<em>l,b</em>] ⊂ [0<em>,</em>1] and the single peak computational effort (in terms of nodes generated) <em>p<sub>peak </sub></em>∈ [0<em>,</em>1] observed for your <em>N </em>= 500 experiment. Do not worry about being too precise, just choose the interval of length ≤ 0<em>.</em>2 where the probability of solvability transitions from approximately 1 to approximately 0. To be clear, you do <strong>not </strong>need to submit code that runs the phase transition experiment: simply modify the the 3 outputs of search_phase_transition to report your findings.</li>
+
+</ol>
